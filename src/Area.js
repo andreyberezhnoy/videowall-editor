@@ -5,7 +5,8 @@ import Text from './Text';
 import Background from './Background';
 
 let collection = {
-  text: <Text />
+  text: <Text />,
+  background: <Background />
 }
 
 const boxTarget = {
@@ -52,8 +53,6 @@ class Area extends Component {
       <div className='area flex' style={{ ...this.props.style, backgroundColor}}>
 
         {this.state.draggedItem && collection[this.state.draggedItem.type]}
-
-        <Background />
       </div>
     );
   }

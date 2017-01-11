@@ -65,6 +65,7 @@ body {
 }
 
 .area {
+  position: relative;
   overflow: hidden;
   border: 1px dashed grey;
 }
@@ -81,4 +82,15 @@ body {
   width: 7rem;
   height: 7rem;
   cursor: move;
+}
+
+/* Background Widget */
+.background-form {
+  position: absolute;
+}
+
+.background-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
