@@ -14,6 +14,7 @@ class Container extends Component {
           <div className='widget-area flex flex-wrap'>
             <Widget type='text' title='Text' />
             <Widget type='image' title='Image' />
+            <Widget type='background' title='Background' />
           </div>
         </div>
 
@@ -29,21 +30,18 @@ class Container extends Component {
               width: '30%',
               height: '40%'
             }}>
-
             </Area>
 
             <Area style={{
               width: '100%',
               height: '40%'
             }}>
-
             </Area>
 
             <Area style={{
               width: '100%',
               height: '20%'
             }}>
-
             </Area>
           </div>
         </div>
