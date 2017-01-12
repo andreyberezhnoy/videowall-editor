@@ -18,12 +18,13 @@ export default class Background extends Component {
 
     // Get color and image url
     const image = this.image.value;
-    // const color = this.color.value;
+    const color = this.color.value;
 
     // Set color and image url
     this.setState({
       showForm: false,
-      image
+      image,
+      color
     })
 
     this.renderBackground();
@@ -43,6 +44,8 @@ export default class Background extends Component {
     return (
       <form className="background-form" onSubmit={(e) => this.saveBackground(e)}>
         <input type="text" ref={(input) => this.image = input} defaultValue={this.state.image} required />
+        <input type="text" ref={(input) => this.color = input} defaultValue={this.state.color} required />
+        <button type="submit">Save</button>
       </form>
     )
   }
