@@ -15,6 +15,7 @@ class Container extends Component {
             <Widget type='text' title='Text' />
             <Widget type='image' title='Image' />
             <Widget type='background' title='Background' />
+            <Widget type='image' title='Image' />
           </div>
         </div>
 
