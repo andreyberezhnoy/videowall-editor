@@ -13,48 +13,50 @@ let collection = {
 
 const boxTarget = {
   drop(props, monitor, component) {
-    const hasDroppedOnChild = monitor.didDrop();
-    if (hasDroppedOnChild && !props.greedy) {
-      return;
-    }
-
-    component.setState({
-      hasDropped: true,
-      hasDroppedOnChild: hasDroppedOnChild,
-      draggedItem: monitor.getItem()
-    });
+    props.onDrop(monitor.getItem());
   }
 };
 
 class Area extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
-    isOverCurrent: PropTypes.bool.isRequired,
+    isOver: PropTypes.bool.isRequired,
+    onDrop: PropTypes.func.isRequired,
+    handleUpdates: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      hasDropped: false,
-      hasDroppedOnChild: false
-    };
+
+    this.droppedComponents = this.droppedComponents.bind(this);
+  }
+
+  droppedComponents(props) {
+    return this.props.components.map((component, index) => {
+      const DroppedComp = collection[component.type];
+      return <DroppedComp key={index}
+                          id={index}
+                          areaId={this.props.id}
+                          settings={component.settings}
+                          onUpdate={this.props.handleUpdates} />
+    })
   }
 
   render() {
-    const { isOverCurrent, connectDropTarget } = this.props;
-    const { hasDropped, hasDroppedOnChild } = this.state;
+    const { isOver, connectDropTarget } = this.props;
 
     // Area defaul backgroundColor
     let backgroundColor = '#fff';
 
-    if (isOverCurrent) {
+    if (isOver) {
       backgroundColor = '#cecece';
     }
 
     return connectDropTarget(
       <div className='area flex' style={{ ...this.props.style, backgroundColor}}>
 
-        {this.state.draggedItem && collection[this.state.draggedItem.type]}
+        {this.droppedComponents()}
+
       </div>
     );
   }
@@ -63,5 +65,4 @@ class Area extends Component {
 export default DropTarget(ItemTypes.WIDGET, boxTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
-  isOverCurrent: monitor.isOver({ shallow: true })
 }))(Area);

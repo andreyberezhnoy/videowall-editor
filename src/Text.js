@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 
 const textAreaStyles = {
   color: '#2d353c',
@@ -11,26 +11,21 @@ const textAreaStyles = {
   resize: 'none'
 }
 
-export default class Text extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {value: 'Text'};
+const Text = ({ id, areaId, settings, onUpdate }) => (
+  <div className='flex flex-center' style={{width: '100%'}}>
+    <h2 style={{display: 'none'}}>{settings.text}</h2>
+    <textarea style={textAreaStyles}
+              type='text'
+              onChange={(event) => onUpdate(areaId, id, { text: event.target.value })}
+              value={settings.text}/>
+  </div>
+)
 
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange (event) {
-    this.setState({
-      value: event.target.value
-    });
-  }
-
-  render () {
-    return (
-      <div className='flex flex-center' style={{width: '100%'}}>
-        <h2 style={{display: 'none'}}>{this.state.value}</h2>
-        <textarea style={textAreaStyles} type="text" onChange={this.handleChange} value={this.state.value}/>
-      </div>
-    );
-  }
+Text.propTypes = {
+  id: PropTypes.number,
+  areaId: PropTypes.number,
+  settings: PropTypes.object,
+  onUpdate: PropTypes.func
 }
+
+export default Text
