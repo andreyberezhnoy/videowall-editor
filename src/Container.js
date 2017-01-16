@@ -40,6 +40,8 @@ class Container extends Component {
         },
       ]
     };
+
+    this.handleUpdates = this.handleUpdates.bind(this);
   }
 
   render() {
@@ -49,7 +51,7 @@ class Container extends Component {
           <span className='sidebar__heading'>Components</span>
 
           <div className='widget-area flex flex-wrap'>
-            <Widget type='text' title='Text' />
+            <Widget type='text' title='Text' settings={{text: 'Text'}} />
             <Widget type='image' title='Image' />
             <Widget type='background' title='Background' />
           </div>
@@ -59,9 +61,11 @@ class Container extends Component {
           <div className='editor-container flex flex-wrap'>
             {this.state.layout.map(({style, components}, index) =>
               <Area key={index}
+                    id={index}
                     style={style}
                     components={components}
-                    onDrop={(item) => this.handleDrop(index, item)} />
+                    onDrop={(item) => this.handleDrop(index, item)}
+                    handleUpdates={this.handleUpdates} />
             )}
           </div>
         </div>
@@ -80,8 +84,22 @@ class Container extends Component {
       }
     }));
   }
+
+  handleUpdates(areaId, itemId, settings) {
+    this.setState(update(this.state, {
+      layout: {
+        [areaId]: {
+          components: {
+            [itemId]: {
+              settings: {
+                $set: settings
+              }
+            }
+          }
+        }
+      }
+    }));
+  }
 }
-
-
 
 export default DragDropContext(HTML5Backend)(Container);

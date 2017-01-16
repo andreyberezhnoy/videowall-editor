@@ -19,7 +19,8 @@ class Area extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
-    onDrop: PropTypes.func.isRequired
+    onDrop: PropTypes.func.isRequired,
+    handleUpdates: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -28,11 +29,15 @@ class Area extends Component {
     this.droppedComponents = this.droppedComponents.bind(this);
   }
 
-  droppedComponents() {
+  droppedComponents(props) {
     return this.props.components.map((component, index) => {
-      const Widget = collection[component.type];
-      return <Widget key={component.type + index}/>;
-    });
+      const DroppedComp = collection[component.type];
+      return <DroppedComp key={index}
+                          id={index}
+                          areaId={this.props.id}
+                          settings={component.settings}
+                          onUpdate={this.props.handleUpdates} />
+    })
   }
 
   render() {

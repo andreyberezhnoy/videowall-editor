@@ -5,13 +5,13 @@ import { DragSource } from 'react-dnd';
 const widgetSource = {
   beginDrag(props) {
     return {
-      type: props.type
+      type: props.type,
+      settings: props.settings
     };
   },
 
   endDrag(props, monitor) {
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
+    //
   }
 };
 
