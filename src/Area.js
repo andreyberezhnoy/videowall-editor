@@ -5,10 +5,10 @@ import Text from './Text';
 import Background from './Background';
 import Image from './Image';
 
-let collection = {
-  text: <Text />,
-  background: <Background />,
-  image: <Image />
+const collection = {
+  text: Text,
+  background: Background,
+  image: Image
 }
 
 const boxTarget = {

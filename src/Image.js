@@ -5,7 +5,7 @@ export default class Image extends Component {
     super(props);
 
     this.state = {
-      image: 'https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png',
+      image: 'http://placehold.it/100x100',
       showForm: false
     }
   }
@@ -47,7 +47,7 @@ export default class Image extends Component {
   renderImage = () => {
     return (
       <div className="image-wrap">
-        <img style={{width: '100%'}} src={this.state.image} alt="" />
+        <img src={this.state.image} alt="" />
       </div>
     )
   }
