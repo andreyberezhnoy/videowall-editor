@@ -54,6 +54,7 @@ class Container extends Component {
             <Widget type='text' title='Text' settings={{text: 'Text'}} />
             <Widget type='image' title='Image' />
             <Widget type='background' title='Background' />
+            <Widget type='image' title='Image' />
           </div>
         </div>
 

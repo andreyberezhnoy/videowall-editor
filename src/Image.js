@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
 
-export default class Background extends Component {
+export default class Image extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       image: 'https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_284x96dp.png',
-      color: '#fff',
       showForm: false
     }
   }
 
-  saveBackground = (event) => {
-    console.log(event);
-
+  saveImage = (event) => {
     event.preventDefault();
 
     // Get color and image url
     const image = this.image.value;
-    const color = this.color.value;
 
     // Set color and image url
     this.setState({
       showForm: false,
-      image,
-      color
+      image
     })
 
-    this.renderBackground();
+    this.renderImage();
   }
 
   showForm = (event) => {
@@ -42,22 +37,18 @@ export default class Background extends Component {
     if (!this.state.showForm) return false;
 
     return (
-      <form className="edit-form" onSubmit={(e) => this.saveBackground(e)}>
+      <form className="edit-form" onSubmit={(e) => this.saveImage(e)}>
         <input type="text" ref={(input) => this.image = input} defaultValue={this.state.image} required />
-        <input type="text" ref={(input) => this.color = input} defaultValue={this.state.color} required />
         <button type="submit">Save</button>
       </form>
     )
   }
 
-  renderBackground = () => {
-    const backgroundStyles = {
-      backgroundImage: `url('${this.state.image}')`,
-      backgroundColor: this.state.color
-    }
-
+  renderImage = () => {
     return (
-      <div className="background-image" style={backgroundStyles}></div>
+      <div className="image-wrap">
+        <img style={{width: '100%'}} src={this.state.image} alt="" />
+      </div>
     )
   }
 
@@ -66,7 +57,7 @@ export default class Background extends Component {
       <div style={{width: '100%'}}>
         <button className="edit-form-btn" onClick={(e) => this.showForm(e)}>Edit</button>
         {this.renderForm()}
-        {this.renderBackground()}
+        {this.renderImage()}
       </div>
     );
   }

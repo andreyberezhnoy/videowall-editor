@@ -3,10 +3,12 @@ import ItemTypes from './ItemTypes';
 import { DropTarget } from 'react-dnd';
 import Text from './Text';
 import Background from './Background';
+import Image from './Image';
 
 let collection = {
-  text: Text,
-  background: Background
+  text: <Text />,
+  background: <Background />,
+  image: <Image />
 }
 
 const boxTarget = {
