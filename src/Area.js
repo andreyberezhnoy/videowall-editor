@@ -4,6 +4,7 @@ import { DropTarget } from 'react-dnd';
 import Text from './Text';
 import Background from './Background';
 import Image from './Image';
+import { connect } from 'react-redux';
 
 const collection = {
   text: Text,
@@ -22,28 +23,11 @@ class Area extends Component {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
     onDrop: PropTypes.func.isRequired,
-    handleUpdates: PropTypes.func.isRequired
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.droppedComponents = this.droppedComponents.bind(this);
-  }
-
-  droppedComponents(props) {
-    return this.props.components.map((component, index) => {
-      const DroppedComp = collection[component.type];
-      return <DroppedComp key={index}
-                          id={index}
-                          areaId={this.props.id}
-                          settings={component.settings}
-                          onUpdate={this.props.handleUpdates} />
-    })
+    elementChange: PropTypes.func.isRequired
   }
 
   render() {
-    const { isOver, connectDropTarget } = this.props;
+    const { isOver, connectDropTarget, style, id, elementChange } = this.props;
 
     // Area defaul backgroundColor
     let backgroundColor = '#fff';
@@ -53,16 +37,30 @@ class Area extends Component {
     }
 
     return connectDropTarget(
-      <div className='area flex' style={{ ...this.props.style, backgroundColor}}>
-
-        {this.droppedComponents()}
-
+      <div className='area flex' style={{ ...style, backgroundColor}}>
+        {this.props.components.map((component, index) => {
+          const DroppedComp = collection[component.type];
+          return <DroppedComp key={index}
+                              id={index}
+                              areaId={id}
+                              settings={component.settings}
+                              onUpdate={elementChange} />
+        })}
       </div>
     );
   }
 }
 
-export default DropTarget(ItemTypes.WIDGET, boxTarget, (connect, monitor) => ({
+const elementChange = (areaId, itemId, settings) => (dispatch) => {
+  dispatch({ type: 'ELEMENT_CHANGE', areaId, itemId, settings });
+}
+
+Area = DropTarget(ItemTypes.WIDGET, boxTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
 }))(Area);
+
+export default connect(
+  null,
+  { elementChange }
+)(Area);
