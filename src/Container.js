@@ -25,8 +25,7 @@ class Container extends Component {
               <Area key={index}
                     id={index}
                     style={style}
-                    components={components}
-                    onDrop={(item) => this.props.dropElement(index, item)} />
+                    components={components}/>
             )}
           </div>
         </div>
@@ -39,13 +38,9 @@ const mapStateToProps = state => ({
   layout: state.layout
 });
 
-const dropElement = (index, item) => (dispatch) => {
-  dispatch({ type: 'DROP_ELEMENT', index, item });
-}
-
 Container = DragDropContext(HTML5Backend)(Container);
 
 export default connect(
   mapStateToProps,
-  { dropElement }
+  null
 )(Container)

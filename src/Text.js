@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 const textAreaStyles = {
   color: '#2d353c',
@@ -11,12 +12,12 @@ const textAreaStyles = {
   resize: 'none'
 }
 
-const Text = ({ id, areaId, settings, onUpdate }) => (
+const Text = ({ id, areaId, settings, onUpdate, elementChange }) => (
   <div className='flex flex-center' style={{width: '100%'}}>
     <h2 style={{display: 'none'}}>{settings.text}</h2>
     <textarea style={textAreaStyles}
               type='text'
-              onChange={(event) => onUpdate(areaId, id, { text: event.target.value })}
+              onChange={(event) => elementChange(areaId, id, { text: event.target.value })}
               value={settings.text}/>
   </div>
 )
@@ -28,4 +29,11 @@ Text.propTypes = {
   onUpdate: PropTypes.func
 }
 
-export default Text
+const elementChange = (areaId, itemId, settings) => (dispatch) => {
+  dispatch({ type: 'ELEMENT_CHANGE', areaId, itemId, settings });
+}
+
+export default connect(
+  null,
+  { elementChange }
+)(Text);

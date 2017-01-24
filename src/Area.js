@@ -14,7 +14,7 @@ const collection = {
 
 const boxTarget = {
   drop(props, monitor, component) {
-    props.onDrop(monitor.getItem());
+    props.dropElement(props.id, monitor.getItem());
   }
 };
 
@@ -22,8 +22,7 @@ class Area extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
-    onDrop: PropTypes.func.isRequired,
-    elementChange: PropTypes.func.isRequired
+    dropElement: PropTypes.func.isRequired
   }
 
   render() {
@@ -43,16 +42,15 @@ class Area extends Component {
           return <DroppedComp key={index}
                               id={index}
                               areaId={id}
-                              settings={component.settings}
-                              onUpdate={elementChange} />
+                              settings={component.settings} />
         })}
       </div>
     );
   }
 }
 
-const elementChange = (areaId, itemId, settings) => (dispatch) => {
-  dispatch({ type: 'ELEMENT_CHANGE', areaId, itemId, settings });
+const dropElement = (index, item) => (dispatch) => {
+  dispatch({ type: 'DROP_ELEMENT', index, item });
 }
 
 Area = DropTarget(ItemTypes.WIDGET, boxTarget, (connect, monitor) => ({
@@ -62,5 +60,5 @@ Area = DropTarget(ItemTypes.WIDGET, boxTarget, (connect, monitor) => ({
 
 export default connect(
   null,
-  { elementChange }
+  { dropElement }
 )(Area);
