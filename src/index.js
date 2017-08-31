@@ -9,7 +9,7 @@ import reducer from './reducers';
 import './index.css';
 
 const middleware = [ thunk ];
-middleware.push(createLogger());
+middleware.push(createLogger);
 
 const store = createStore(
   reducer,
